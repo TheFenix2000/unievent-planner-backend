@@ -6,16 +6,16 @@ export abstract class BaseClass extends BasicClass {
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserAccount',
+    ref: 'BasicAccount',
     readonly: true,
     select: false,
   })
-  createdBy?: string;
+  createdBy?: mongoose.Types.ObjectId;
 
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserAccount',
+    ref: 'BasicAccount',
   })
-  updatedBy!: string;
+  updatedBy!: mongoose.Types.ObjectId;
 }

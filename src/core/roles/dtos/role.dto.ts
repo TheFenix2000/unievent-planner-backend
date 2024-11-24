@@ -15,9 +15,6 @@ export class RoleDto extends BaseDto {
   name!: string;
 
   @Expose()
-  code!: string;
-
-  @Expose()
   @Type(() => PermissionRule)
   permissions!: PermissionRule[];
 

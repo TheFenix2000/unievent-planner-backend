@@ -7,13 +7,14 @@ import { Role, RoleSchema } from './role.model';
 import { UserAccount, UserAccountSchema } from './user-account.model';
 
 export * from './announcement.model';
+export * from './basic.model';
 export * from './event.model';
 export * from './group.model';
 export * from './join-code.model';
 export * from './role.model';
 export * from './user-account.model';
 
-export const MongooseModels: ModelDefinition[] = [
+export const MongooseModels = [
   {
     name: Announcement.name,
     schema: AnnouncementSchema,

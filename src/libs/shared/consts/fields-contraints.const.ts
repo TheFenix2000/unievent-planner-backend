@@ -3,11 +3,6 @@ export class FieldConstraints {
     MAX_LENGTH: 30,
   };
 
-  static readonly CODE = {
-    MAX_LENGTH: 50,
-    PATTERN: /^[a-z0-9-]+$/,
-  };
-
   static readonly COURSE_NAME = {
     MAX_LENGTH: 50,
   };

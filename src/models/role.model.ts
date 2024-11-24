@@ -6,6 +6,7 @@ export class PermissionRule {
   @Prop({
     required: true,
     trim: true,
+    trim: true,
     lowercase: true,
   })
   action!: Action;
@@ -15,6 +16,18 @@ export class PermissionRule {
     trim: true,
     lowercase: true,
   })
+  action!: Action;
+
+  @Prop({
+    required: true,
+    trim: true,
+    lowercase: true,
+  })
+  subject!: Subject;
+}
+
+@Schema()
+export class Role extends BaseClass {
   subject!: Subject;
 }
 
@@ -38,7 +51,17 @@ export class Role extends BaseClass {
         return [value];
       }
     },
+    type: () => Object,
+    _id: false,
+    set: (value) => {
+      if (value instanceof Array) {
+        return value;
+      } else {
+        return [value];
+      }
+    },
   })
+  permissions!: PermissionRule[];
   permissions!: PermissionRule[];
 }
 

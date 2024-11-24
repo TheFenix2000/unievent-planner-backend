@@ -21,9 +21,6 @@ export class GroupDto extends BaseDto {
   @Expose()
   avatarUrl!: string;
 
-  @Expose()
-  code!: string;
-
   @IsDefined()
   @Expose()
   status!: SystemStatus;

@@ -4,6 +4,9 @@ import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoConnectionString, PermissionGuard } from './libs';
 import { MongooseModels } from './models';
+import { GroupsController } from './core/groups/controllers';
+import { GroupsService } from './core/groups/service';
+import { GroupsModule } from './core/groups/groups.module';
 import { UpserDefaultsService } from './upser-defaults/upser-defaults.service';
 
 @Module({
@@ -20,6 +23,7 @@ import { UpserDefaultsService } from './upser-defaults/upser-defaults.service';
       }),
     }),
     MongooseModule.forFeature(MongooseModels),
+    GroupsModule,
   ],
   controllers: [],
   providers: [

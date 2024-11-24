@@ -39,9 +39,9 @@ export class Group extends BaseClass {
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserAccount',
+    ref: 'BasicAccount',
   })
-  president!: string;
+  president!: mongoose.Types.ObjectId;
 
   @Prop({
     required: true,
@@ -50,16 +50,16 @@ export class Group extends BaseClass {
     select: false,
     ref: 'JoinCode',
   })
-  joinCodes!: string[];
+  joinCodes!: mongoose.Types.ObjectId[];
 
   @Prop({
     required: true,
     default: [],
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'UserAccount',
+    ref: 'BasicAccount',
     select: false,
   })
-  members!: string[];
+  members!: mongoose.Types.ObjectId[];
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

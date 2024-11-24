@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { BaseClass } from './base.model';
 
 @Schema()
@@ -8,7 +9,7 @@ export class JoinCode extends BaseClass {
   role!: string;
 
   @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Group' })
-  group!: string;
+  group!: mongoose.Types.ObjectId;
 
   //how many times code was used
   @Prop({ required: true, default: 0, select: false })
