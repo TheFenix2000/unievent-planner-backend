@@ -6,12 +6,14 @@ import {
   Announcement,
   AnnouncementSchema,
 } from '../../models/announcement.model';
+import { SystemLogsModule } from '../system-logs/system-logs.module'; // Importuj cały moduł SystemLogsModule
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Announcement.name, schema: AnnouncementSchema },
     ]),
+    SystemLogsModule, // Import SystemLogsModule
   ],
   controllers: [AnnouncementsController],
   providers: [AnnouncementsService],

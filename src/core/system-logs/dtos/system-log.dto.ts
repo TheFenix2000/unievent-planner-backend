@@ -1,11 +1,12 @@
 import { Expose } from 'class-transformer';
+import { BaseDto } from '../../../libs/shared/dtos';
 
-export class SystemLogDto {
+export class SystemLogDto extends BaseDto {
   @Expose()
   action!: string;
 
   @Expose()
-  details!: string;
+  message!: string;
 
   @Expose()
   context!: string;
