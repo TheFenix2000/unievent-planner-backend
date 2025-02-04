@@ -1,17 +1,24 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseClass } from './base.model';
-import { Context, SystemLogAction } from 'src/libs';
+import { SystemContext, SystemLogAction } from 'src/libs';
 
 @Schema()
 export class SystemLog extends BaseClass {
-  @Prop({ required: true, enum: SystemLogAction })
-  action!: SystemLogAction; // typ akcji (np. 'create', 'delete', 'update') enum
+  @Prop({
+    required: true,
+    enum: SystemLogAction,
+    default: SystemLogAction.CREATE,
+  })
+  action!: SystemLogAction;
 
-  @Prop({ required: true, type: String })
-  message!: string; // szczegóły akcji, np. co zostało dodane/usunięte
+  @Prop({ required: true, trim: true, maxlength: 1000 })
+  message!: string;
 
-  @Prop({ required: true, enum: Context })
-  context!: Context; // enum event, announcement, group, joincodes, roles
+  @Prop({ required: true, enum: SystemContext, default: SystemContext.SYSTEM })
+  context!: SystemContext;
+
+  @Prop({ required: true })
+  relatedObjectId!: string;
 }
 
 export const SystemLogSchema = SchemaFactory.createForClass(SystemLog);

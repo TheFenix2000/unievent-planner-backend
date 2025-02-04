@@ -6,4 +6,4 @@ export * from './subject.enum';
 export * from './verification-status.enum';
 export * from './system-status.enum';
 export * from './system-log-action.enum';
-export * from './context.enum';
+export * from './system-context.enum';

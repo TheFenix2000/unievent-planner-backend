@@ -50,7 +50,7 @@ export class Group extends BaseClass {
     select: false,
     ref: 'JoinCode',
   })
-  joinCodes!: mongoose.Types.ObjectId[];
+  joinCodes!: string[];
 
   @Prop({
     required: true,
@@ -59,7 +59,7 @@ export class Group extends BaseClass {
     ref: 'UserAccount',
     select: false,
   })
-  members!: mongoose.Types.ObjectId[];
+  members!: string[];
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

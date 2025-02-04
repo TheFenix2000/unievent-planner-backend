@@ -15,7 +15,7 @@ export abstract class BaseDto extends BasicDto {
     { toClassOnly: true },
   )
   @Type(() => Date)
-  createdAt?: Date;
+  createdAt!: Date;
 
   @Expose()
   @Type(() => Date)
