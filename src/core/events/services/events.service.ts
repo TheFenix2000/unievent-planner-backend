@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Event } from 'src/models';
+import { Event } from '../../../models';
 import { CreateEventDto } from '../dtos/create-event.dto';
 import { plainToClass } from 'class-transformer';
-import { UpserDefaultsService } from 'src/upser-defaults/upser-defaults.service';
+import { UpserDefaultsService } from '../../../upser-defaults/upser-defaults.service';
 import { EventDto } from '../dtos/event.dto';
-import { UserAccountDto } from 'src/core/accounts/dtos/user-account.dto';
+import { UserAccountDto } from '../../../core/accounts/dtos/user-account.dto';
 
 @Injectable()
 export class EventsService {
@@ -16,7 +16,7 @@ export class EventsService {
     private upserDefaultsService: UpserDefaultsService,
   ) {}
 
-  async find(): Promise<EventDto[]> {
+  async findEvent(): Promise<EventDto[]> {
     const events = await this.eventModel
       .find({ expiresAt: { $gte: new Date() } })
       .populate('createdBy')
@@ -29,7 +29,7 @@ export class EventsService {
     );
   }
 
-  async getEvent(group: string): Promise<EventDto[]> {
+  async getEventsForGroups(group: string): Promise<EventDto[]> {
     const events = await this.eventModel
       .find({ groups: { $in: [group] }, expiresAt: { $gte: new Date() } })
       .populate('createdBy')
@@ -38,7 +38,7 @@ export class EventsService {
       .exec();
 
     if (!events) {
-      throw new NotFoundException();
+      throw new NotFoundException('No events found for this group');
     }
 
     return events.map((events) =>
@@ -55,7 +55,7 @@ export class EventsService {
     createEventDoc.startDate = createEventDto.startDate;
     createEventDoc.endDate = createEventDto.endDate;
     createEventDoc.groups = createEventDto.groups;
-    createEventDoc.typeModel = createEventDto.typeModel;
+    createEventDoc.typeModel = createEventDto.eventType;
     // createEventDoc.status = createEventDto.status;
     createEventDoc.createdAt = new Date();
     createEventDoc.updatedAt = new Date();
@@ -67,5 +67,8 @@ export class EventsService {
     return plainToClass(EventDto, result, {
       excludeExtraneousValues: true,
     });
+  }
+  async deleteById(id: string): Promise<void> {
+    await this.eventModel.deleteOne({ _id: id }).exec();
   }
 }

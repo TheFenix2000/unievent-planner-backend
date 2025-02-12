@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { BaseDto } from '../../../libs';
-import { EventTypeDto } from './eventType.dto';
+import { EventTypeDto } from './event-type.dto';
 
 export class EventDto extends BaseDto {
   @Expose()
@@ -19,5 +19,5 @@ export class EventDto extends BaseDto {
   groups!: string[];
 
   @Expose()
-  typeModel!: EventTypeDto;
+  eventType!: EventTypeDto;
 }

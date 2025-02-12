@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { EventTypeDto } from './eventType.dto';
+import { EventTypeDto } from './event-type.dto';
 import { FieldConstraints } from 'src/libs';
 import { MaxLength } from 'class-validator';
 
@@ -19,7 +19,7 @@ export class CreateEventDto {
   status!: string;
 
   @Expose()
-  typeModel!: EventTypeDto;
+  eventType!: EventTypeDto;
 
   @Expose()
   startDate!: Date;
