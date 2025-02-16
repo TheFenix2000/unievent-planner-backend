@@ -1,7 +1,6 @@
 import { Prop } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { BasicClass } from './basic.model';
-import { AccountBasicDto } from 'src/libs';
 
 export abstract class BaseClass extends BasicClass {
   @Prop({
@@ -11,12 +10,12 @@ export abstract class BaseClass extends BasicClass {
     readonly: true,
     select: false,
   })
-  createdBy?: AccountBasicDto;
+  createdBy?: string;
 
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
     ref: 'UserAccount',
   })
-  updatedBy!: AccountBasicDto;
+  updatedBy!: string;
 }

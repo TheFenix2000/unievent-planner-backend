@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseClass } from './base.model';
-import { SystemContext, SystemLogAction } from 'src/libs';
+import { FieldConstraints, SystemLogContext, SystemLogAction } from 'src/libs';
 
 @Schema()
 export class SystemLog extends BaseClass {
@@ -11,11 +11,19 @@ export class SystemLog extends BaseClass {
   })
   action!: SystemLogAction;
 
-  @Prop({ required: true, trim: true, maxlength: 1000 })
+  @Prop({
+    required: true,
+    trim: true,
+    maxlength: FieldConstraints.DESCRIPTION.MAX_LENGTH,
+  })
   message!: string;
 
-  @Prop({ required: true, enum: SystemContext, default: SystemContext.SYSTEM })
-  context!: SystemContext;
+  @Prop({
+    required: true,
+    enum: SystemLogContext,
+    default: SystemLogContext.SYSTEM,
+  })
+  context!: SystemLogContext;
 
   @Prop({ required: true })
   relatedObjectId!: string;

@@ -1,18 +1,18 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { SystemLogsService } from '../services/system-logs.service';
-import { SystemLog } from '../../../models/system-log.model';
+import { SystemLogDto } from '../dtos/system-log.dto';
 
 @Controller('system-logs')
 export class SystemLogsController {
   constructor(private readonly systemLogsService: SystemLogsService) {}
 
   @Get()
-  async find(): Promise<SystemLog[]> {
+  async find(): Promise<SystemLogDto[]> {
     return this.systemLogsService.find();
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<SystemLog> {
+  async get(@Param('id') id: string): Promise<SystemLogDto> {
     return this.systemLogsService.findById(id);
   }
 }

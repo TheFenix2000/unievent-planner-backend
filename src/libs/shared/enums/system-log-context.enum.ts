@@ -1,4 +1,4 @@
-export enum SystemContext {
+export enum SystemLogContext {
   EVENT = 'Event',
   ANNOUNCEMENT = 'Announcement',
   GROUP = 'Group',

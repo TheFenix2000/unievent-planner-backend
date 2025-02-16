@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { SystemLog } from '../../../models/system-log.model';
+import { SystemLog } from 'src/models';
 import { SystemLogDto } from '../dtos/system-log.dto';
-import { UpserDefaultsService } from '../../../upser-defaults/upser-defaults.service';
+import { UpserDefaultsService } from 'src/upser-defaults/upser-defaults.service';
 import { plainToClass } from 'class-transformer';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class SystemLogsService {
     private readonly upserDefaultService: UpserDefaultsService,
   ) {}
 
-  async createSystemLog(systemLogDto: SystemLogDto): Promise<SystemLog> {
+  async createSystemLog(systemLogDto: SystemLogDto): Promise<SystemLogDto> {
     const user = await this.upserDefaultService.getSystemAccount();
 
     const newSystemLog = new this.systemLogModel({
@@ -22,8 +22,8 @@ export class SystemLogsService {
       context: systemLogDto.context,
       createdBy: user.id,
       updatedBy: user.id,
-      createdAt: systemLogDto.createdAt,
-      updatedAt: systemLogDto.updatedAt,
+      createdAt: new Date(),
+      updatedAt: new Date(),
       relatedObjectId: systemLogDto.relatedObjectId,
     });
 
@@ -33,20 +33,21 @@ export class SystemLogsService {
     });
   }
 
-  // system-logs.service.ts
-  async find(): Promise<SystemLog[]> {
+  async find(): Promise<SystemLogDto[]> {
     const systemLogs = await this.systemLogModel
       .find()
       .populate('createdBy')
       .populate('updatedBy')
       .lean()
       .exec();
-    return plainToClass(SystemLogDto, systemLogs, {
-      excludeExtraneousValues: true,
-    });
+    return systemLogs.map((systemLog) =>
+      plainToClass(SystemLogDto, systemLog, {
+        excludeExtraneousValues: true,
+      }),
+    );
   }
 
-  async findById(id: string): Promise<SystemLog> {
+  async findById(id: string): Promise<SystemLogDto> {
     const systemLog = await this.systemLogModel
       .findById(id)
       .populate('createdBy')
