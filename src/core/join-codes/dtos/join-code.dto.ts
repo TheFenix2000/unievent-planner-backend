@@ -1,13 +1,10 @@
 import { Expose, Type } from 'class-transformer';
 import { IsDefined } from 'class-validator';
 import { BaseDto, SystemStatus } from '../../../libs';
-import { GroupDto } from '../../groups/dtos';
-import { RoleDto } from '../../roles/dtos';
+import { GroupDto } from '../../groups/dtos/group.dto';
+import { RoleDto } from '../../roles/dtos/role.dto';
 
 export class JoinCodeDto extends BaseDto {
-  @Expose()
-  name!: string;
-
   @Expose()
   @Type(() => RoleDto)
   role!: RoleDto;
@@ -27,5 +24,8 @@ export class JoinCodeDto extends BaseDto {
   usesLeft?: number;
 
   @Expose()
-  expiresAt: Date;
+  expiresAt?: Date;
+
+  @Expose()
+  code!: string;
 }

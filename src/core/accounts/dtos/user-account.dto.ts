@@ -1,6 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { IsDefined } from 'class-validator';
-import { GroupDto } from 'src/core/groups/dtos';
+import { GroupDto } from '../../groups/dtos/group.dto';
 import { RoleDto } from 'src/core/roles/dtos';
 import { AccountBasicDto, SystemStatus } from '../../../libs';
 

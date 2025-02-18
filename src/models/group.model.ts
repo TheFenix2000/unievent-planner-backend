@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-
 import mongoose from 'mongoose';
 import { FieldConstraints, VerificationStatus } from '../libs';
 import { BaseClass } from './base.model';
-
 @Schema()
 export class Group extends BaseClass {
   @Prop({
@@ -39,9 +37,9 @@ export class Group extends BaseClass {
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'BasicAccount',
+    ref: 'UserAccount',
   })
-  president!: mongoose.Types.ObjectId;
+  president!: string;
 
   @Prop({
     required: true,
@@ -50,16 +48,16 @@ export class Group extends BaseClass {
     select: false,
     ref: 'JoinCode',
   })
-  joinCodes!: mongoose.Types.ObjectId[];
+  joinCodes!: string;
 
   @Prop({
     required: true,
     default: [],
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'BasicAccount',
+    ref: 'UserAccount',
     select: false,
   })
-  members!: mongoose.Types.ObjectId[];
+  members!: string[];
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

@@ -1,16 +1,9 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-<<<<<<< HEAD
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { plainToClass } from 'class-transformer';
 import { Connection, HydratedDocument, Model } from 'mongoose';
-import { UserAccountDto } from '../core/accounts/dtos';
+import { UserAccountDto } from 'src/core/accounts/dtos/user-account.dto';
 import { MongooseModels, UserAccount } from '../models';
-=======
-import { InjectConnection } from '@nestjs/mongoose';
-import { Connection } from 'mongoose';
-import { MongooseModels } from '../models';
->>>>>>> e071cb3 (feat: wip working)
-
 @Injectable()
 export class UpserDefaultsService implements OnModuleInit {
   private systemAccount?: HydratedDocument<UserAccount>;
@@ -71,8 +64,10 @@ export class UpserDefaultsService implements OnModuleInit {
         systemAccount.username = username;
         systemAccount.updatedAt = new Date();
         systemAccount.createdAt = new Date();
+        systemAccount.createdBy = systemAccount.id;
         systemAccount.updatedBy = systemAccount.id;
         systemAccount.createdBy = systemAccount.id;
+        systemAccount.avatarUrl = `https://i.imgur.com/${Date.now()}.png`;
         systemAccount.email = 'system@unievent-planner.com';
         await systemAccount.save();
       }

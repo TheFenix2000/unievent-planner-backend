@@ -1,9 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './libs';
 import { WinstonModule } from 'nest-winston';
 import { WinstonLogger } from 'src/libs/internal/winston.logger';
+import { AppModule } from './app.module';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
@@ -19,7 +18,6 @@ async function bootstrap(): Promise<void> {
   });
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api/v1');
-  app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(`${process.env.HOST_PORT}`);
 
   WinstonLogger.info(
