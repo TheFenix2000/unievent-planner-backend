@@ -17,18 +17,17 @@ export class SystemLogsService {
   async create(createSystemLogDto: CreateSystemLogDto): Promise<SystemLogDto> {
     const user = await this.upserDefaultService.getSystemAccount();
 
-    const newSystemLog = new this.systemLogModel({
-      action: createSystemLogDto.action,
-      message: createSystemLogDto.message,
-      context: createSystemLogDto.context,
-      createdBy: user.id,
-      updatedBy: user.id,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      relatedObjectId: createSystemLogDto.relatedObjectId,
-    });
+    const systemLogDoc = new this.systemLogModel();
+    systemLogDoc.action = createSystemLogDto.action;
+    systemLogDoc.message = createSystemLogDto.message;
+    systemLogDoc.context = createSystemLogDto.context;
+    systemLogDoc.createdBy = user.id;
+    systemLogDoc.updatedBy = user.id;
+    systemLogDoc.createdAt = new Date();
+    systemLogDoc.updatedAt = new Date();
+    systemLogDoc.relatedObjectId = createSystemLogDto.relatedObjectId;
 
-    const result = await newSystemLog.save();
+    const result = await systemLogDoc.save();
     return plainToClass(SystemLogDto, result, {
       excludeExtraneousValues: true,
     });
