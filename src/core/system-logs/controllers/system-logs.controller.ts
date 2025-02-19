@@ -13,6 +13,6 @@ export class SystemLogsController {
 
   @Get(':id')
   async get(@Param('id') id: string): Promise<SystemLogDto> {
-    return this.systemLogsService.findById(id);
+    return this.systemLogsService.get(id);
   }
 }

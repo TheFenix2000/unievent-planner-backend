@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
-import { BaseDto } from 'src/libs';
-import { SystemLogContext, SystemLogAction, SystemStatus } from 'src/libs';
+import { BaseDto } from '../../../libs';
+import { SystemLogContext, SystemLogAction, SystemStatus } from '../../../libs';
 
 export class SystemLogDto extends BaseDto {
   @Expose()

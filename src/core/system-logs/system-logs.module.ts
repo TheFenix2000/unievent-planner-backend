@@ -6,8 +6,8 @@ import {
   SystemLogSchema,
   UserAccount,
   UserAccountSchema,
-} from 'src/models';
-import { UpserDefaultsService } from 'src/upser-defaults/upser-defaults.service';
+} from '../../models';
+import { UpserDefaultsService } from '../../upser-defaults/upser-defaults.service';
 import { SystemLogsController } from './controllers/system-logs.controller';
 
 @Module({

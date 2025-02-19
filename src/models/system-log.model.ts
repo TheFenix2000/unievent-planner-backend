@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BaseClass } from './base.model';
-import { FieldConstraints, SystemLogContext, SystemLogAction } from 'src/libs';
+import { FieldConstraints, SystemLogContext, SystemLogAction } from '../libs';
 
 @Schema()
 export class SystemLog extends BaseClass {
