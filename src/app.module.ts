@@ -5,6 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoConnectionString, PermissionGuard } from './libs';
 import { MongooseModels } from './models';
 import { UpserDefaultsService } from './upser-defaults/upser-defaults.service';
+import { AnnouncementsService } from './core/announcements/services/announcements.service';
+import { AccountsService } from './core/accounts/services/accounts.service';
+import { EventsService } from './core/events/services/events.service';
+import { GroupsService } from './core/groups/services/groups.service';
+import { MockDataService } from './mock-data/mock-data.service';
 
 @Module({
   imports: [
@@ -29,6 +34,11 @@ import { UpserDefaultsService } from './upser-defaults/upser-defaults.service';
     },
     UpserDefaultsService,
     Logger,
+    AnnouncementsService,
+    AccountsService,
+    EventsService,
+    GroupsService,
+    MockDataService,
   ],
 })
 export class AppModule {}
