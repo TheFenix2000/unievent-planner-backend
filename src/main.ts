@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './libs';
 import { WinstonModule } from 'nest-winston';
 import { WinstonLogger } from 'src/libs/internal/winston.logger';
+import { MockDataService } from './mock-data/mock-data.service';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
@@ -20,6 +21,12 @@ async function bootstrap(): Promise<void> {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api/v1');
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  if (process.env.ADD_MOCK_DATA === 'true') {
+    const mockDataService = app.get(MockDataService);
+    await mockDataService.initializeMockData();
+  }
+
   await app.listen(`${process.env.HOST_PORT}`);
 
   WinstonLogger.info(

@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { EventType, EventTypeColor } from '../../../libs/';
+import { EventType, EventTypeColor } from '../../../libs';
 
 export class EventTypeDto {
   @Expose()
