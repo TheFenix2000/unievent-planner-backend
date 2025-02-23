@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { EventTypeDto } from './event-type.dto';
-import { FieldConstraints } from 'src/libs';
+import { FieldConstraints } from '../../../libs';
 import { MaxLength } from 'class-validator';
 
 export class CreateEventDto {
@@ -14,9 +14,6 @@ export class CreateEventDto {
 
   @Expose()
   groups!: string[];
-
-  @Expose()
-  status!: string;
 
   @Expose()
   eventType!: EventTypeDto;

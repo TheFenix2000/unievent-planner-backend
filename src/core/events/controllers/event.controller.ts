@@ -8,18 +8,22 @@ export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
   @Get()
   async find(): Promise<EventDto[]> {
-    return this.eventsService.findEvent();
+    return this.eventsService.find();
   }
-  @Get(':group')
-  async get(@Param('group') group: string): Promise<EventDto[]> {
-    return this.eventsService.getEventsForGroups(group);
+  @Get(':id')
+  async getById(@Param('id') id: string): Promise<EventDto> {
+    return this.eventsService.getEventsForId(id);
+  }
+  @Get(':groupId')
+  async getByGroup(@Param('groupId') groupId: string): Promise<EventDto[]> {
+    return this.eventsService.getEventsForGroups(groupId);
   }
   @Post()
-  async create(@Body() newEvent: CreateEventDto): Promise<EventDto> {
-    return this.eventsService.createEvent(newEvent);
+  async create(@Body() createEventDto: CreateEventDto): Promise<EventDto> {
+    return this.eventsService.create(createEventDto);
   }
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<void> {
-    this.eventsService.deleteById(id);
+    this.eventsService.delete(id);
   }
 }

@@ -16,9 +16,9 @@ export class EventsService {
     private upserDefaultsService: UpserDefaultsService,
   ) {}
 
-  async findEvent(): Promise<EventDto[]> {
+  async find(): Promise<EventDto[]> {
     const events = await this.eventModel
-      .find({ expiresAt: { $gte: new Date() } })
+      .find({ endDate: { $gte: new Date() } })
       .populate('createdBy')
       .populate('updatedBy')
       .lean()
@@ -29,24 +29,33 @@ export class EventsService {
     );
   }
 
-  async getEventsForGroups(group: string): Promise<EventDto[]> {
+  async getEventsForGroups(groupId: string): Promise<EventDto[]> {
     const events = await this.eventModel
-      .find({ groups: { $in: [group] }, expiresAt: { $gte: new Date() } })
+      .find({ groups: { $in: [groupId] }, endDate: { $gte: new Date() } })
+      .populate('createdBy')
+      .populate('updatedBy')
+      .lean()
+      .exec();
+
+    return events.map((events) =>
+      plainToClass(EventDto, events, { excludeExtraneousValues: true }),
+    );
+  }
+  async getEventsForId(id: string): Promise<EventDto> {
+    const events = await this.eventModel
+      .find({ id: { $in: [id] }, endDate: { $gte: new Date() } })
       .populate('createdBy')
       .populate('updatedBy')
       .lean()
       .exec();
 
     if (!events) {
-      throw new NotFoundException('No events found for this group');
+      throw new NotFoundException('No events found with this id');
     }
-
-    return events.map((events) =>
-      plainToClass(EventDto, events, { excludeExtraneousValues: true }),
-    );
+    return plainToClass(EventDto, events[0], { excludeExtraneousValues: true });
   }
 
-  async createEvent(createEventDto: CreateEventDto): Promise<EventDto> {
+  async create(createEventDto: CreateEventDto): Promise<EventDto> {
     const user: UserAccountDto =
       await this.upserDefaultsService.getSystemAccount();
     const createEventDoc = new this.eventModel();
@@ -56,7 +65,6 @@ export class EventsService {
     createEventDoc.endDate = createEventDto.endDate;
     createEventDoc.groups = createEventDto.groups;
     createEventDoc.typeModel = createEventDto.eventType;
-    // createEventDoc.status = createEventDto.status;
     createEventDoc.createdAt = new Date();
     createEventDoc.updatedAt = new Date();
     createEventDoc.createdBy = user.id;
@@ -68,7 +76,17 @@ export class EventsService {
       excludeExtraneousValues: true,
     });
   }
-  async deleteById(id: string): Promise<void> {
-    await this.eventModel.deleteOne({ _id: id }).exec();
+  async delete(id: string): Promise<void> {
+    const events = await this.eventModel
+      .find({ id: { $in: [id] }, endDate: { $gte: new Date() } })
+      .populate('createdBy')
+      .populate('updatedBy')
+      .lean()
+      .exec();
+    if (events.length === 0) {
+      throw new NotFoundException('No events found with this id to delete');
+    } else {
+      await this.eventModel.deleteOne({ _id: id }).exec();
+    }
   }
 }
