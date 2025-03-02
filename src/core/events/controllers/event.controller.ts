@@ -14,7 +14,7 @@ export class EventsController {
   async getById(@Param('id') id: string): Promise<EventDto> {
     return this.eventsService.getEventsForId(id);
   }
-  @Get(':groupId')
+  @Get('groups/:groupId')
   async getByGroup(@Param('groupId') groupId: string): Promise<EventDto[]> {
     return this.eventsService.getEventsForGroups(groupId);
   }

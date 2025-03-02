@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Event } from '../../../models';
+import { Event, Group } from '../../../models';
 import { CreateEventDto } from '../dtos/create-event.dto';
 import { plainToClass } from 'class-transformer';
 import { UpserDefaultsService } from '../../../upser-defaults/upser-defaults.service';
@@ -13,6 +13,8 @@ export class EventsService {
   constructor(
     @InjectModel(Event.name)
     private eventModel: Model<Event>,
+    @InjectModel(Group.name)
+    private groupModel: Model<Group>,
     private upserDefaultsService: UpserDefaultsService,
   ) {}
 
@@ -30,8 +32,15 @@ export class EventsService {
   }
 
   async getEventsForGroups(groupId: string): Promise<EventDto[]> {
+    const group = await this.groupModel.find({
+      id: { $in: [groupId] },
+      endDate: { $gte: new Date() },
+    });
+    if (group.length === 0 && group[0] == null) {
+      throw new NotFoundException('No group found with this id');
+    }
     const events = await this.eventModel
-      .find({ groups: { $in: [groupId] }, endDate: { $gte: new Date() } })
+      .find({ groups: { $in: [group] }, endDate: { $gte: new Date() } })
       .populate('createdBy')
       .populate('updatedBy')
       .lean()
