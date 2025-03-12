@@ -1,6 +1,11 @@
 import { Expose, Type } from 'class-transformer';
-import { IsDefined } from 'class-validator';
-import { Action, BaseDto, Subject, SystemStatus } from '../../../libs';
+import {
+  Action,
+  BaseDto,
+  Subject,
+  SystemStatus,
+  AccountBasicDto,
+} from '../../../libs';
 export class PermissionRule {
   @Expose()
   action!: Action;
@@ -21,6 +26,17 @@ export class RoleDto extends BaseDto {
   permissions!: PermissionRule[];
 
   @Expose()
-  @IsDefined()
   status!: SystemStatus;
+
+  @Expose()
+  @Type(() => AccountBasicDto)
+  updatedBy!: AccountBasicDto;
+
+  @Expose()
+  @Type(() => AccountBasicDto)
+  createdBy?: AccountBasicDto;
+
+  @Expose()
+  @Type(() => Date)
+  updatedAt!: Date;
 }
