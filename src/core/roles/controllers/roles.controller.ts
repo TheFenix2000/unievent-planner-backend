@@ -2,14 +2,15 @@ import { Controller, Post, Get, Body, Delete, Param } from '@nestjs/common';
 import { RoleService } from '../services/roles.service';
 import { RoleDto } from '../dtos/role.dto';
 import { Role } from 'src/models/role.model';
+import { CreateRoleDto } from '../dtos/create.role.dto';
 
 @Controller('role')
 export class RolesController {
   constructor(private readonly rolesService: RoleService) {}
 
   @Post()
-  async createRole(@Body() roleDto: RoleDto): Promise<Role> {
-    return this.rolesService.createRole(roleDto);
+  async createRole(@Body() createRoleDto: CreateRoleDto): Promise<RoleDto> {
+    return this.rolesService.createRole(createRoleDto);
   }
   @Delete(':roleOrId')
   async deleteRole(@Param('roleOrId') roleOrId: string): Promise<Role> {
