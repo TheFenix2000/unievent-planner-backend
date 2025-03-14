@@ -7,8 +7,10 @@ import {
   Matches,
   IsDefined,
   IsEnum,
+  Validate,
 } from 'class-validator';
 import { FieldConstraints, SystemStatus } from '../../../libs';
+import { IsValidPermission } from '../../../libs/shared/validators/permission.validator';
 
 export class CreateRoleDto {
   @Expose()
@@ -26,6 +28,7 @@ export class CreateRoleDto {
 
   @Expose()
   @Type(() => PermissionRule)
+  @Validate(IsValidPermission, { each: true })
   permissions!: PermissionRule[];
 
   @Expose()

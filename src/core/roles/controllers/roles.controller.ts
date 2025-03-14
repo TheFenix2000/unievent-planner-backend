@@ -20,4 +20,10 @@ export class RolesController {
   async getAllRoles(): Promise<Role[]> {
     return this.rolesService.getAllRoles();
   }
+  @Get(':roleOrIdSzukaj')
+  async getRole(
+    @Param('roleOrIdSzukaj') roleOrIdSzukaj: string,
+  ): Promise<Role> {
+    return this.rolesService.getRole(roleOrIdSzukaj);
+  }
 }

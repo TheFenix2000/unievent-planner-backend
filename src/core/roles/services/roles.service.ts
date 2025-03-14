@@ -59,4 +59,22 @@ export class RoleService {
   async getAllRoles(): Promise<Role[]> {
     return this.roleModel.find().exec();
   }
+
+  async getRole(roleOrIdSzukaj: string): Promise<Role> {
+    let roleDetails: Role | null = null;
+
+    if (isObjectIdOrHexString(roleOrIdSzukaj)) {
+      roleDetails = await this.roleModel.findById(roleOrIdSzukaj).exec();
+    } else {
+      roleDetails = await this.roleModel
+        .findOne({ code: roleOrIdSzukaj })
+        .exec();
+    }
+
+    if (!roleDetails) {
+      throw new NotFoundException(`Nie znaleziono roli ${roleOrIdSzukaj}`);
+    }
+
+    return roleDetails;
+  }
 }
