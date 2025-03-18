@@ -36,7 +36,7 @@ export class EventsService {
       id: { $in: [groupId] },
       endDate: { $gte: new Date() },
     });
-    if (group.length === 0 && group[0] == null) {
+    if (!group) {
       throw new NotFoundException('No group found with this id');
     }
     const events = await this.eventModel
