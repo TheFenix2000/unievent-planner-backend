@@ -1,6 +1,6 @@
 import { randomBytes } from 'crypto';
 
-export function generateCode(length: number = 6) {
+export function generateCode(length: number = 6): string {
   return randomBytes(length)
     .toString('base64')
     .replace(/[^a-zA-Z0-9]/g, '')

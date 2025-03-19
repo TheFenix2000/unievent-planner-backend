@@ -1,11 +1,5 @@
 import { Expose } from 'class-transformer';
-import {
-  IsDate,
-  IsDefined,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { Optional } from '@nestjs/common';
 
 export class CreateJoinCodeDto {
