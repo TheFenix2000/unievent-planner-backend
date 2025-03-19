@@ -28,6 +28,15 @@ export class Role extends BaseClass {
   name!: string;
 
   @Prop({
+    required: true,
+    trim: true,
+    unique: true,
+    maxlength: FieldConstraints.CODE.MAX_LENGTH,
+    pattern: FieldConstraints.CODE.PATTERN,
+  })
+  code!: string;
+
+  @Prop({
     default: [],
     type: () => Object,
     _id: false,
