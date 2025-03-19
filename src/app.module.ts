@@ -1,9 +1,9 @@
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
-import { getMongoConnectionString, PermissionGuard } from './libs';
+import { getMongoConnectionString } from './libs';
 import { MongooseModels } from './models';
+import { GroupsModule } from './core/groups/groups.module';
 import { UpserDefaultsService } from './upser-defaults/upser-defaults.service';
 
 @Module({
@@ -20,13 +20,14 @@ import { UpserDefaultsService } from './upser-defaults/upser-defaults.service';
       }),
     }),
     MongooseModule.forFeature(MongooseModels),
+    GroupsModule,
   ],
   controllers: [],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: PermissionGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: PermissionGuard,
+    // },
     UpserDefaultsService,
     Logger,
   ],

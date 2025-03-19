@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
-import { FieldConstraints } from '../libs';
+import { FieldConstraints } from 'src/libs';
 import { BaseClass } from './base.model';
+import mongoose from 'mongoose';
 
 @Schema()
 export class UserAccount extends BaseClass {
@@ -38,7 +38,7 @@ export class UserAccount extends BaseClass {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Role',
   })
-  role!: string[];
+  role!: string;
 
   @Prop({
     required: true,
@@ -46,7 +46,7 @@ export class UserAccount extends BaseClass {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Group',
   })
-  groups!: string[];
+  groups!: string;
 }
 
 export const UserAccountSchema = SchemaFactory.createForClass(UserAccount);

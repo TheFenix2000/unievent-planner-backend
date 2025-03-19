@@ -27,12 +27,12 @@ export abstract class BasicAccount extends BasicClass {
     readonly: true,
     select: false,
   })
-  createdBy?: string;
+  createdBy?: mongoose.Types.ObjectId;
 
   @Prop({
     required: true,
     type: mongoose.Schema.Types.ObjectId,
     ref: 'UserAccount',
   })
-  updatedBy!: string;
+  updatedBy!: mongoose.Types.ObjectId;
 }

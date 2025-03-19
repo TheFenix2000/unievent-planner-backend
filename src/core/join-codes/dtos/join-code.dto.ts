@@ -6,12 +6,6 @@ import { RoleDto } from '../../roles/dtos/role.dto';
 
 export class JoinCodeDto extends BaseDto {
   @Expose()
-  name!: string;
-
-  @Expose()
-  code!: string;
-
-  @Expose()
   @Type(() => RoleDto)
   role!: RoleDto;
 
@@ -30,5 +24,8 @@ export class JoinCodeDto extends BaseDto {
   usesLeft?: number;
 
   @Expose()
-  expiresAt: Date;
+  expiresAt?: Date;
+
+  @Expose()
+  code!: string;
 }

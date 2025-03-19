@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-
 import mongoose from 'mongoose';
 import { FieldConstraints, VerificationStatus } from '../libs';
 import { BaseClass } from './base.model';
-
 @Schema()
 export class Group extends BaseClass {
   @Prop({
@@ -50,7 +48,7 @@ export class Group extends BaseClass {
     select: false,
     ref: 'JoinCode',
   })
-  joinCodes!: string[];
+  joinCodes!: string;
 
   @Prop({
     required: true,
