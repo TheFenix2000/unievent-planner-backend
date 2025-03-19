@@ -15,7 +15,7 @@ export class RoleService {
     @InjectModel(Role.name) private readonly roleModel: Model<Role>,
   ) {}
 
-  async createRole(createRoleDto: CreateRoleDto): Promise<RoleDto> {
+  async create(createRoleDto: CreateRoleDto): Promise<RoleDto> {
     const newRole = new this.roleModel();
 
     const user: UserAccountDto =
@@ -36,7 +36,7 @@ export class RoleService {
     });
   }
 
-  async deleteRole(roleOrId: string): Promise<Role> {
+  async remove(roleOrId: string): Promise<Role> {
     let deletedRole: Role | null = null;
 
     if (isObjectIdOrHexString(roleOrId)) {
@@ -56,23 +56,24 @@ export class RoleService {
 
     return deletedRole;
   }
-  async getAllRoles(): Promise<Role[]> {
-    return this.roleModel.find().exec();
+  async findAllRoles(): Promise<Role[]> {
+    return this.roleModel.find().lean().exec();
   }
 
-  async getRole(roleOrIdSzukaj: string): Promise<Role> {
+  async findRole(roleOrIdSearch: string): Promise<Role> {
     let roleDetails: Role | null = null;
 
-    if (isObjectIdOrHexString(roleOrIdSzukaj)) {
-      roleDetails = await this.roleModel.findById(roleOrIdSzukaj).exec();
+    if (isObjectIdOrHexString(roleOrIdSearch)) {
+      roleDetails = await this.roleModel.findById(roleOrIdSearch).exec();
     } else {
       roleDetails = await this.roleModel
-        .findOne({ code: roleOrIdSzukaj })
+        .findOne({ code: roleOrIdSearch })
+        .lean()
         .exec();
     }
 
     if (!roleDetails) {
-      throw new NotFoundException(`Nie znaleziono roli ${roleOrIdSzukaj}`);
+      throw new NotFoundException(`Role ${roleOrIdSearch} not found`);
     }
 
     return roleDetails;

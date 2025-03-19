@@ -9,21 +9,21 @@ export class RolesController {
   constructor(private readonly rolesService: RoleService) {}
 
   @Post()
-  async createRole(@Body() createRoleDto: CreateRoleDto): Promise<RoleDto> {
-    return this.rolesService.createRole(createRoleDto);
+  async create(@Body() createRoleDto: CreateRoleDto): Promise<RoleDto> {
+    return this.rolesService.create(createRoleDto);
   }
   @Delete(':roleOrId')
-  async deleteRole(@Param('roleOrId') roleOrId: string): Promise<Role> {
-    return this.rolesService.deleteRole(roleOrId);
+  async remove(@Param('roleOrId') roleOrId: string): Promise<Role> {
+    return this.rolesService.remove(roleOrId);
   }
   @Get()
-  async getAllRoles(): Promise<Role[]> {
-    return this.rolesService.getAllRoles();
+  async findAllRoles(): Promise<Role[]> {
+    return this.rolesService.findAllRoles();
   }
-  @Get(':roleOrIdSzukaj')
-  async getRole(
-    @Param('roleOrIdSzukaj') roleOrIdSzukaj: string,
+  @Get(':roleOrIdSearch')
+  async findRole(
+    @Param('roleOrIdSearch') roleOrIdSzukaj: string,
   ): Promise<Role> {
-    return this.rolesService.getRole(roleOrIdSzukaj);
+    return this.rolesService.findRole(roleOrIdSzukaj);
   }
 }
