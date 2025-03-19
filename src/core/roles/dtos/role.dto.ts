@@ -1,11 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import {
-  Action,
-  BaseDto,
-  Subject,
-  SystemStatus,
-  AccountBasicDto,
-} from '../../../libs';
+import { Action, BaseDto, Subject, SystemStatus } from '../../../libs';
 export class PermissionRule {
   @Expose()
   action!: Action;
@@ -27,16 +21,4 @@ export class RoleDto extends BaseDto {
 
   @Expose()
   status!: SystemStatus;
-
-  @Expose()
-  @Type(() => AccountBasicDto)
-  updatedBy!: AccountBasicDto;
-
-  @Expose()
-  @Type(() => AccountBasicDto)
-  createdBy?: AccountBasicDto;
-
-  @Expose()
-  @Type(() => Date)
-  updatedAt!: Date;
 }

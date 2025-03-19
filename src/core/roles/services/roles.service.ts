@@ -37,7 +37,7 @@ export class RoleService {
   }
 
   async remove(roleOrId: string): Promise<Role> {
-    let deletedRole: Role | null = null;
+    let deletedRole: Role;
 
     if (isObjectIdOrHexString(roleOrId)) {
       deletedRole = await this.roleModel.findByIdAndDelete(roleOrId).exec();
@@ -48,26 +48,35 @@ export class RoleService {
     }
 
     if (!deletedRole) {
-      if (!deletedRole) {
-        throw new NotFoundException(`Nie znaleziono roli ${roleOrId}`);
-      }
-      return deletedRole;
+      throw new NotFoundException(`Role ${roleOrId} not found`);
     }
 
     return deletedRole;
   }
   async findAllRoles(): Promise<Role[]> {
-    return this.roleModel.find().lean().exec();
+    return this.roleModel
+      .find()
+      .populate('updatedBy')
+      .populate('createdBy')
+      .lean()
+      .exec();
   }
 
   async findRole(roleOrIdSearch: string): Promise<Role> {
-    let roleDetails: Role | null = null;
+    let roleDetails: Role;
 
     if (isObjectIdOrHexString(roleOrIdSearch)) {
-      roleDetails = await this.roleModel.findById(roleOrIdSearch).exec();
+      roleDetails = await this.roleModel
+        .findById(roleOrIdSearch)
+        .populate('createdBy')
+        .populate('updatedBy')
+        .lean()
+        .exec();
     } else {
       roleDetails = await this.roleModel
         .findOne({ code: roleOrIdSearch })
+        .populate('createdBy')
+        .populate('updatedBy')
         .lean()
         .exec();
     }
